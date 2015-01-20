@@ -9,6 +9,8 @@ class EchoHandler(asyncore.dispatcher_with_send):
 	def handle_read(self):
 		data = self.recv(8192)
 		if data:
+			if data.find(chr(27)) >= 0:
+				self.close()
 			data = data.strip()
 			self.send("{} {}\n".format(data,"Chris"))
 
